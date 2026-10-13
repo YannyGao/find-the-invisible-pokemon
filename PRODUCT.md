@@ -20,7 +20,7 @@ Turn cry recognition into a hot-and-cold search game: players follow a spatial s
 
 ## Positioning
 
-“Where Is the Hidden Pokémon?” follows a listen, navigate, find, identify, and collect loop. The concept is explicitly inspired by Find the Invisible Cow and extends it with a full-screen search field, Pokémon cries, generation controls, a four-choice reveal, collectible Pokémon cursors, and a persistent Pokédex tool. Selected Pokémon replace the hunt pointer visually and never reveal the hidden Pokémon's location.
+“Find the Invisible Pokémon” follows a listen, navigate, find, identify, and collect loop. The concept is explicitly inspired by Find the Invisible Cow and extends it with a full-screen search field, Pokémon cries, generation controls, a four-choice reveal, collectible Pokémon cursors, and a persistent Pokédex tool. Selected Pokémon replace the hunt pointer visually and never reveal the invisible Pokémon's location.
 
 ## Operating Context
 
