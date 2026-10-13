@@ -1,8 +1,8 @@
-# Where Is the Hidden Pokémon?
+# Find the Invisible Pokémon
 
-An audio-led Pokémon hunt inspired by [Find the Invisible Cow](https://findtheinvisiblecow.com/). Follow a cry across the full screen as it gets louder and more frequent, click the hidden Pokémon, then identify it from four choices.
+An audio-led Pokémon hunt inspired by [Find the Invisible Cow](https://findtheinvisiblecow.com/). Follow a cry across the full screen as it gets louder and more frequent, click the invisible Pokémon, then identify it from four choices.
 
-## [Play the live game →](https://yannygao.github.io/where-is-the-hidden-pokemon/)
+## [Play the live game →](https://yannygao.github.io/find-the-invisible-pokemon/)
 
 ## Run locally
 
