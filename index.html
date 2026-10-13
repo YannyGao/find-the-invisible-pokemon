@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#f7f0df" />
+    <meta name="description" content="Where is the Hidden Pokémon? Follow its cry across the screen to find it." />
+    <title>Where Is the Hidden Pokémon?</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <div class="app-shell">
+      <button class="dex-tool" data-view="library" aria-label="Open Pokédex">
+        <svg class="dex-icon" aria-hidden="true" viewBox="0 0 64 72">
+          <path class="dex-icon-body" d="M7 4h38l12 12v49H7z"/>
+          <circle class="dex-icon-lens" cx="18" cy="17" r="8"/>
+          <circle class="dex-icon-dot" cx="36" cy="12" r="2"/>
+          <circle class="dex-icon-dot" cx="43" cy="12" r="2"/>
+          <rect class="dex-icon-screen" x="15" y="33" width="33" height="22" rx="3"/>
+          <path class="dex-icon-hinge" d="M51 18v40"/>
+        </svg>
+      </button>
+
+      <main id="main">
+        <section class="view is-active" id="practiceView" data-view-panel="practice">
+          <header class="topbar">
+            <div>
+              <p class="eyebrow">The whole screen is the search field</p>
+              <h1>Where is the hidden Pokémon?</h1>
+            </div>
+            <div class="top-actions">
+              <label class="select-wrap">
+                <span class="sr-only">Generation</span>
+                <select id="generationSelect">
+                  <option value="all">All generations</option>
+                  <option value="1">Generation I</option><option value="2">Generation II</option>
+                  <option value="3">Generation III</option><option value="4">Generation IV</option>
+                  <option value="5">Generation V</option><option value="6">Generation VI</option>
+                  <option value="7">Generation VII</option><option value="8">Generation VIII</option>
+                  <option value="9">Generation IX</option>
+                </select>
+                <svg aria-hidden="true" viewBox="0 0 20 20"><path d="m6 8 4 4 4-4"/></svg>
+              </label>
+              <button class="icon-button" id="soundToggle" aria-label="Sound is on" aria-pressed="true">
+                <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M4 10v4h4l5 4V6l-5 4H4Zm12.5-1.5a5 5 0 0 1 0 7m2-9a8 8 0 0 1 0 11"/></svg>
+              </button>
+            </div>
+          </header>
+
+          <div class="session-strip">
+            <div class="session-progress"><span id="roundLabel">Find 1 of 10</span><div class="track"><span id="roundProgress"></span></div></div>
+            <div class="session-score"><span>Session score</span><strong id="sessionScore">0</strong></div>
+          </div>
+
+          <div class="practice-stage" id="practiceStage">
+            <section class="hunt-deck" id="huntDeck" aria-labelledby="huntTitle">
+              <div class="recorder-topline"><span id="huntSerial">POKÉ RADAR / SIGNAL ----</span><span class="live-dot" id="huntState">READY</span></div>
+              <div class="hunt-field" id="huntField" tabindex="0" role="application" aria-label="Hidden Pokémon search field. Move the pointer and follow the cry, then click when it is loudest and fastest.">
+                <div class="radar-grid" aria-hidden="true"></div>
+              <div class="hunt-intro" id="huntIntro">
+                  <span class="pokeball-radar" aria-hidden="true"><i></i></span>
+                  <p class="eyebrow">A wild signal appeared</p>
+                  <h2 id="huntTitle">Where is the hidden Pokémon?</h2>
+                  <p>Move anywhere on the screen. The cry gets louder and repeats faster as you get closer. Click when the signal peaks.</p>
+                  <label class="helper-picker"><span>Choose your Pokémon cursor</span><select id="helperSelect"><option value="">Standard cursor</option></select></label>
+                  <button class="primary-button" id="startHunt">Start searching</button>
+                  <a class="cow-credit" href="https://findtheinvisiblecow.com/" target="_blank" rel="noreferrer">Inspired by Find the Invisible Cow ↗</a>
+                </div>
+                <div class="hunt-hud" id="huntHud" hidden>
+                  <div><span>Signal</span><strong id="proximityLabel">Searching…</strong></div>
+                  <div class="signal-bars" id="signalBars" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
+                  <button class="hunt-help" id="replayCry" type="button">Replay cry</button>
+                </div>
+                <div class="scanner-dot" id="scannerDot" aria-hidden="true"><img id="cursorPokemon" alt="" /></div>
+                <div class="found-burst" id="foundBurst" hidden aria-hidden="true"><img id="foundSprite" alt="" /><span>FOUND</span></div>
+              </div>
+              <div class="hunt-instruction"><span>MOVE</span><i></i><span>LISTEN</span><i></i><span>CLICK TO FIND</span></div>
+            </section>
+
+            <section class="answer-zone" id="answerZone" aria-labelledby="answerTitle" hidden>
+              <div class="answer-heading">
+                <div><p class="eyebrow">You found the signal</p><h2 id="answerTitle">Who's that Pokémon?</h2></div>
+                <span>1 try</span>
+              </div>
+              <div class="quiz-clue">
+                <img id="quizSilhouette" alt="Mystery Pokémon silhouette" />
+                <button class="quiz-replay" id="quizReplay" type="button">
+                  <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M8 9v6h4l5 4V5l-5 4H8Zm11-1a6 6 0 0 1 0 8"/></svg>
+                  Replay cry
+                </button>
+              </div>
+              <div class="answer-grid" id="answerGrid" aria-live="polite">
+                <div class="answer-skeleton"></div><div class="answer-skeleton"></div><div class="answer-skeleton"></div><div class="answer-skeleton"></div>
+              </div>
+            </section>
+
+            <section class="reveal-panel" id="revealPanel" hidden aria-live="polite">
+              <div class="reveal-art"><span class="reveal-number" id="revealNumber">#000</span><img id="revealImage" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/25.png" alt="" /></div>
+              <div class="reveal-copy">
+                <span class="result-pill" id="resultPill">Correct</span>
+                <h2 id="revealName">Pokémon</h2>
+                <p id="revealMeta">Pokémon details</p>
+                <span class="dex-unlock">Pokédex entry revealed</span>
+                <button class="companion-choice" id="makeCompanion" type="button">Use as Pokémon cursor</button>
+                <button class="primary-button" id="nextQuestion">Next sound <svg aria-hidden="true" viewBox="0 0 20 20"><path d="M4 10h11m-4-4 4 4-4 4"/></svg></button>
+              </div>
+            </section>
+          </div>
+
+          <div class="status-message" id="practiceStatus" role="status"></div>
+          <section class="session-complete" id="sessionComplete" hidden>
+            <div class="completion-burst" aria-hidden="true"><svg viewBox="0 0 48 48"><path d="M24 4v8m0 24v8M4 24h8m24 0h8M10 10l6 6m16 16 6 6m0-28-6 6M16 32l-6 6"/><circle cx="24" cy="24" r="7"/></svg></div>
+            <div><span>Session complete</span><h2 id="completeScore">0 / 10</h2><p id="completeMessage">Nice listening. Every replay sharpens your ear.</p></div>
+            <div class="complete-actions"><button class="primary-button" id="practiceAgain">Play again</button></div>
+          </section>
+        </section>
+
+        <section class="dex-backdrop" id="libraryView" data-view-panel="library" hidden>
+          <div class="dex-device-panel" id="dexDevicePanel" role="dialog" aria-modal="true" aria-labelledby="dexTitle">
+          <aside class="dex-hardware" aria-hidden="true">
+            <div class="dex-camera"><span></span></div>
+            <div class="dex-status-lights"><i></i><i></i><i></i></div>
+            <div class="dex-mini-screen"><strong>FIND</strong><span>POKÉMON</span><em id="dexFoundDisplay">000</em></div>
+            <div class="dex-controls"><span class="dex-dpad"></span><span class="dex-round-button"></span></div>
+            <div class="dex-speaker"><i></i><i></i><i></i><i></i></div>
+          </aside>
+          <div class="dex-content">
+          <header class="topbar library-header">
+            <div><p class="eyebrow">National index</p><h1 id="dexTitle">Your Pokédex</h1><p>Every National Pokédex number is listed. Only correctly identified Pokémon are revealed.</p></div>
+            <button class="dex-close" id="closePokedex" aria-label="Close Pokédex">Close</button>
+          </header>
+          <div class="library-tools">
+            <label class="search-box">
+              <svg aria-hidden="true" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6"/><path d="m16 16 4 4"/></svg>
+              <span class="sr-only">Search Pokémon</span>
+              <input id="searchInput" type="search" placeholder="Search by name or number" autocomplete="off" />
+            </label>
+            <label class="select-wrap"><span class="sr-only">Filter library by generation</span><select id="libraryGeneration"><option value="all">All generations</option><option value="1">Gen I</option><option value="2">Gen II</option><option value="3">Gen III</option><option value="4">Gen IV</option><option value="5">Gen V</option><option value="6">Gen VI</option><option value="7">Gen VII</option><option value="8">Gen VIII</option><option value="9">Gen IX</option></select><svg aria-hidden="true" viewBox="0 0 20 20"><path d="m6 8 4 4 4-4"/></svg></label>
+          </div>
+          <div class="library-count"><strong id="libraryCount">Loading Pokédex…</strong><span>Found entries can replay their cry</span></div>
+          <div class="pokemon-list" id="pokemonList"></div>
+          <button class="secondary-button load-more" id="loadMore" hidden>Load more Pokémon</button>
+          </div>
+          </div>
+        </section>
+
+      </main>
+    </div>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <script src="app.js" defer></script>
+  </body>
+</html>
